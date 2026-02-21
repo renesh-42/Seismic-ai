@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Seismic AI - Predict Structural Damage Before Disaster Strikes. Professional earthquake damage analysis tool.">
+    <title>Seismic AI | Earthquake Damage Prediction</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Leaflet Map CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <!-- Background Animation Layer -->
+    <div class="bg-animation" id="bg-animation"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar glass">
+        <div class="nav-container">
+            <a href="#" class="logo">SEISMIC<span> AI</span></a>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#predict">Analyze</a></li>
+                <li><a href="#map-section">Map</a></li>
+                <li><a href="#about">Methodology</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1 class="reveal-text">Predict Structural Damage <br><span class="accent">Before Disaster Strikes</span>
+            </h1>
+            <p class="reveal-fade">Advanced seismic simulation and structural risk assessment for professional
+                engineering analysis.</p>
+
+            <div class="seismic-wave-container">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+
+            <a href="#predict" class="cta-button">
+                <span>Start Analysis</span>
+                <div class="glow"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Prediction Section -->
+    <section id="predict" class="predict section-padding">
+        <div class="container">
+            <h2 class="section-title">Structural Risk Analysis</h2>
+            <div class="grid-layout">
+                <!-- Unit Converter Card (Left) -->
+                <div class="card glass unit-converter">
+                    <h3>Unit Converter</h3>
+                    <div class="converter-group">
+                        <label>Length / Height</label>
+                        <div class="converter-inputs">
+                            <div class="c-input">
+                                <input type="number" id="conv-m" placeholder="Meters">
+                                <span>m</span>
+                            </div>
+                            <div class="c-swap"><i data-lucide="repeat"></i></div>
+                            <div class="c-input">
+                                <input type="number" id="conv-ft" placeholder="Feet">
+                                <span>ft</span>
+                            </div>
+                        </div>
+                        <div class="converter-actions">
+                            <button id="apply-height" class="btn-micro">Apply to Height</button>
+                            <button id="apply-pillar" class="btn-micro">Apply to Pillar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="engine-toggle-container">
+                    <label>Analysis Engine</label>
+                    <div class="engine-toggle">
+                        <button type="button" id="engine-det" class="tgl-btn active">Deterministic</button>
+                        <button type="button" id="engine-sci" class="tgl-btn">Scientific (FEM+ML)</button>
+                    </div>
+                </div>
+
+                <form id="prediction-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="magnitude">Earthquake Magnitude (Mw): <span id="mag-val"
+                                    class="accent">5.0</span></label>
+                            <input type="range" id="magnitude" min="1" max="9" step="0.1" value="5.0">
+                        </div>
+                        <div class="form-group">
+                            <label for="pga">Peak Ground Acceleration (PGA): <span id="pga-val"
+                                    class="accent">0.15g</span></label>
+                            <input type="range" id="pga" min="0.01" max="1.5" step="0.01" value="0.15">
+                        </div>
+                    </div>
+                    <div class="sparkline-container">
+                        <canvas id="severity-sparkline"></canvas>
+                        <span class="sparkline-label">Intensity Curve (Predicted)</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="soil-type">Soil Type</label>
+                            <input list="soil-list" id="soil-type" placeholder="Select or type soil type..." required>
+                            <datalist id="soil-list">
+                                <option value="Clay">Soft Clay</option>
+                                <option value="Sand">Loose Sand</option>
+                                <option value="Rock">Dense Rock</option>
+                                <option value="Loam">Mixed Loam</option>
+                                <option value="Silt">Fine Silt</option>
+                                <option value="Peat">Organic Peat (High Risk)</option>
+                                <option value="Gravel">Compact Gravel</option>
+                                <option value="Fill">Artificial Fill (Unstable)</option>
+                                <option value="Chalk">Soft Chalk</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="material">Construction Material</label>
+                            <input list="material-list" id="material" placeholder="Select or type material..." required>
+                            <datalist id="material-list">
+                                <option value="Concrete">Reinforced Concrete</option>
+                                <option value="Steel">Structural Steel</option>
+                                <option value="Brick">Brick Masonry</option>
+                                <option value="Wood">Structural Wood (Ductile)</option>
+                                <option value="Bamboo">Bamboo (Resilient)</option>
+                                <option value="Adobe">Adobe / Mud Brick (High Risk)</option>
+                                <option value="Precast">Precast Concrete</option>
+                                <option value="Confined">Confined Masonry</option>
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="height">Building Height (m)</label>
+                            <input type="number" id="height" placeholder="e.g. 15" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="floors">Number of Floors</label>
+                            <input type="number" id="floors" placeholder="e.g. 5" required min="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pillar">Pillar Length (m)</label>
+                        <input type="number" id="pillar" placeholder="e.g. 3.5" required step="0.1">
+                    </div>
+
+                    <button type="submit" class="analyze-btn">Analyze Damage</button>
+                </form>
+            </div>
+
+            <!-- Results Panel (Hidden Initially) -->
+            <div id="results-panel" class="results-panel" style="display: none;">
+                <div class="card glass result-card">
+                    <h3>Analysis Results</h3>
+
+                    <div class="result-visualization">
+                        <div class="progress-container">
+                            <svg class="progress-ring" width="120" height="120">
+                                <circle class="progress-ring__circle-bg" stroke="#333" stroke-width="8"
+                                    fill="transparent" r="50" cx="60" cy="60" />
+                                <circle class="progress-ring__circle" stroke="#00ff88" stroke-width="8"
+                                    stroke-dasharray="314.159 314.159" style="stroke-dashoffset: 314.159"
+                                    fill="transparent" r="50" cx="60" cy="60" />
+                            </svg>
+                            <div class="percentage-display">
+                                <div class="main-percent">
+                                    <span id="damage-percent">0</span>%
+                                </div>
+                                <span id="confidence-range" class="confidence-text">±0%</span>
+                            </div>
+                        </div>
+
+                        <div class="results-stats-grid">
+                            <div class="stat-box">
+                                <p class="stat-label">Risk Level:</p>
+                                <div id="risk-badge" class="badge">
+                                    <i id="risk-icon" data-lucide="shield-check"></i>
+                                    <span id="risk-text">Low</span>
+                                </div>
+                            </div>
+
+                            <div class="stat-box">
+                                <p class="stat-label">Seismic Classification:</p>
+                                <div id="seismic-zone-badge" class="badge zone-badge">
+                                    <i id="zone-icon" data-lucide="info"></i>
+                                    <span id="zone-text">Zone II (Low Risk)</span>
+                                </div>
+                            </div>
+
+                            <div class="stat-box">
+                                <p class="stat-label">Calculated Base Shear (V):</p>
+                                <div id="base-shear-badge" class="badge shear-badge">
+                                    <i data-lucide="activity"></i>
+                                    <span id="base-shear-text">0.00 MN</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sensitivity-analysis">
+                        <h4>Key Risk Drivers (Sensitivity)</h4>
+                        <div id="sensitivity-drivers" class="drivers-list">
+                            <!-- Drivers will be injected here -->
+                        </div>
+                    </div>
+
+                    <div class="component-analysis">
+                        <h4>Damage Breakdown</h4>
+                        <div class="chart-container">
+                            <canvas id="component-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="scientific-assumptions glass">
+                        <h4>Analysis Assumptions</h4>
+                        <ul class="assumption-list">
+                            <li><strong>Stochastic Nature:</strong> Results represent a 90% confidence interval
+                                based on deterministic modeling of random seismic parameters.</li>
+                            <li><strong>Structural Response:</strong> Assumes non-linear structural behavior beyond
+                                the elastic limit for severe events.</li>
+                            <li><strong>Local Site Effects:</strong> Soil amplification is modeled using standard
+                                GMM (Ground Motion Models) without site-specific micro-zoning.</li>
+                        </ul>
+                    </div>
+
+                    <div id="fem-viz-container" class="fem-analysis" style="display: none;">
+                        <h4>FEM Structural Inter-storey Drift (Scientific Mode)</h4>
+                        <div class="fem-simulation-viewport">
+                            <canvas id="fem-graph"></canvas>
+                            <div class="fem-legend">
+                                <span>Relative Inter-storey Drift (mm) per Floor</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="building-preview">
+                        <div class="building" id="building-visual">
+                            <div class="windows"></div>
+                            <div class="cracks" id="cracks-overlay"></div>
+                            <div class="debris" id="debris-overlay"></div>
+                        </div>
+                    </div>
+
+                    <div class="explanation">
+                        <p id="explanation-text"></p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="download-report" class="btn-secondary">Download Report (PDF)</button>
+                        <button id="save-history" class="btn-secondary">Save to History</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history" class="history section-padding">
+        <div class="container">
+            <h2 class="section-title">Analysis History</h2>
+            <div class="card glass history-card">
+                <div class="table-responsive">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Magnitude</th>
+                                <th>Soil Type</th>
+                                <th>Damage (%)</th>
+                                <th>Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <!-- History entries will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="no-history" class="text-center" style="display: none; padding: 20px;">
+                    <p>No analysis history found.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="map-section" class="map-section section-padding">
+        <div class="container text-center">
+            <h2 class="section-title">Global Seismic Activity Map</h2>
+            <p>Real-time and historical earthquake data visualization.</p>
+            <div id="map" class="map-container glass"></div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section id="about" class="about section-padding">
+        <div class="container grid-2">
+            <div class="about-text">
+                <h2 class="section-title">Analytical Methodology</h2>
+                <p>Seismic AI utilizes a rule-based deterministic engine to estimate structural vulnerability. Our
+                    approach focuses on three core pillars of seismic engineering:</p>
+                <ul class="method-list">
+                    <li><strong>Soil-Structure Interaction (SSI):</strong> Soft soils like Clay can amplify seismic
+                        waves by up to
+                        1.6x compared to bedrock, directly impacting structural response.</li>
+                    <li><strong>Structural Resonance:</strong> We calculate the interplay between building height
+                        (floors) and wave frequency to predict shear stress.</li>
+                    <li><strong>Material Ductility:</strong> Steel frames offer superior energy dissipation compared to
+                        traditional brick masonry.</li>
+                </ul>
+                <div class="stats-counter grid-3">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="98">0</span>%
+                        <p>Confidence Rate</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="1500">0</span>+
+                        <p>Simulations Run</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="50">0</span>+
+                        <p>Seismic Zones</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image glass">
+                <div class="methodology-card">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring"></div>
+                    <p class="center-label">SEISMIC CORE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2026 Seismic AI Project. Professional Seismic Analysis Suite.</p>
+                <p class="credits">Designed for Engineering Safety & Disaster Mitigation</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet Script -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

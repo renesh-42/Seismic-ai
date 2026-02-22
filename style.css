@@ -1,7 +1,7 @@
 :root {
-    --bg-dark: #0f0f0f;
-    --accent: #00ff88;
-    --accent-glow: rgba(0, 255, 136, 0.4);
+    --bg-dark: #212121;
+    --accent: #B71C1C;
+    --accent-glow: rgba(183, 28, 28, 0.4);
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
     --text-primary: #ffffff;
@@ -704,7 +704,7 @@ input[type="range"]::-webkit-slider-thumb {
 .fem-analysis {
     margin: 20px 0;
     padding: 20px;
-    background: rgba(0, 255, 136, 0.02);
+    background: rgba(183, 28, 28, 0.02);
     border: 1px solid var(--accent-glow);
     border-radius: 15px;
 }

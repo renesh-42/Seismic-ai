@@ -156,8 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasets: [{
                     label: 'Inter-storey Drift (mm)',
                     data: driftValues,
-                    backgroundColor: 'rgba(0, 255, 136, 0.4)',
-                    borderColor: '#00ff88',
+                    backgroundColor: 'rgba(183, 28, 28, 0.4)',
+                    borderColor: '#B71C1C',
                     borderWidth: 1
                 }]
             },
@@ -488,12 +488,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     components.utilities
                 ],
                 fill: true,
-                backgroundColor: 'rgba(0, 255, 136, 0.2)',
-                borderColor: '#00ff88',
-                pointBackgroundColor: '#00ff88',
+                backgroundColor: 'rgba(183, 28, 28, 0.2)',
+                borderColor: '#B71C1C',
+                pointBackgroundColor: '#B71C1C',
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: '#00ff88'
+                pointHoverBorderColor: '#B71C1C'
             }]
         };
 
@@ -544,11 +544,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 labels: labels,
                 datasets: [{
                     data: data,
-                    borderColor: 'rgba(0, 255, 136, 0.5)',
+                    borderColor: 'rgba(183, 28, 28, 0.5)',
                     borderWidth: 2,
                     pointRadius: 0,
                     fill: true,
-                    backgroundColor: 'rgba(0, 255, 136, 0.05)',
+                    backgroundColor: 'rgba(183, 28, 28, 0.05)',
                     tension: 0.4
                 }]
             },
@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         samples.forEach(s => {
-            const color = s.mag > 8 ? '#ff4444' : (s.mag > 6 ? '#ffcc00' : '#00ff88');
+            const color = s.mag > 8 ? '#ff4444' : (s.mag > 6 ? '#ffcc00' : '#B71C1C');
             L.circleMarker(s.pos, {
                 radius: s.mag * 2,
                 color: color,
@@ -703,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getRiskColor(damage) {
-        if (damage < 35) return '#00ff88';
+        if (damage < 35) return '#B71C1C';
         if (damage < 70) return '#ffcc00';
         return '#ff4444';
     }
